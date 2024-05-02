@@ -4,6 +4,7 @@ import org.erim.controller.GameController;
 import org.erim.entities.Game;
 import org.erim.services.GameService;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -22,11 +23,31 @@ public class Main {
         while(gameRunning){
             String input = scanner.next();
             switch (input.toLowerCase()){
-                case "b" -> gameController.buyOptions();
-                case "s" -> gameController.sell();
+                case "b" -> {
+                    System.out.println("What do you wanna BUY?");
+                    gameController.candyOptions();
+
+                    int candyType = scanner.nextInt();
+                    System.out.println("How many?");
+                    int amount = scanner.nextInt();
+
+                    gameController.buyCandy(candyType,amount);
+                }
+                case "s" -> {
+                    System.out.println("What do you wanna SELl ?");
+                    gameController.candyOptions();
+
+                    int candyType = scanner.nextInt();
+                    System.out.println("How many?");
+                    int amount = scanner.nextInt();
+
+                    gameController.sellCandy(candyType,amount);
+
+                }
                 case "j" -> gameController.jet();
                 case "v" -> gameController.bank();
                 case "l" -> gameController.loan();
+                default -> System.out.println("could not read input");
             }
         }
     }

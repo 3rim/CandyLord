@@ -70,4 +70,8 @@ public class GameService {
        game.getPlayer().buyCandy(candyType,amount);
        return game;
     }
+    public Game sellCandy(Candy candyType, int amount){
+        game.getPlayer().sellCandy(candyType,amount);
+        return game;
+    }
 }

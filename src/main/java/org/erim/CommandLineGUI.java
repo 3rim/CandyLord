@@ -8,7 +8,6 @@ import org.erim.enums.Candy;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
 import java.util.concurrent.TimeUnit;
 
 public class CommandLineGUI {
@@ -47,19 +46,11 @@ public class CommandLineGUI {
         System.out.println("(B)uy Drugs - (S)ell Drugs - (J)et to other city");
     }
 
-    public void renderBuyOptions(List<Candy> candyList) {
-        System.out.println("buy options");
+    public void renderCandyOptions(List<Candy> candyList) {
         candyList.forEach(candy -> {
             System.out.printf("%d.%s || ",candy.ordinal(),candy);
         });
-        System.out.println("1. Caramels - 2. Chewing Gum");
-
-        /*Scanner scanner = new Scanner(System.in);
-        int candyType = scanner.nextInt();
-        System.out.println("How many?");
-        int amount = scanner.nextInt();*/
-
-
+        System.out.println();
     }
 
     public void renderMain(Game game) {
