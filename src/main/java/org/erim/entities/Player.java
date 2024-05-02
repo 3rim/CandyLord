@@ -3,6 +3,7 @@ package org.erim.entities;
 import org.erim.enums.Candy;
 import org.erim.enums.Location;
 import org.erim.enums.Overcoat;
+import org.erim.exceptions.CandyCapacityException;
 import org.erim.exceptions.NoMoneyException;
 
 import java.util.ArrayList;
@@ -107,9 +108,11 @@ public class Player {
     public void buyCandy(Candy candyType, int amount) {
         int candyPrice = this.currentLocation.getBlackMarketList().get(candyType);
         int totalCosts = amount * candyPrice;
-        if (cash < (totalCosts)) {
+        if (cash < (totalCosts))
             throw new NoMoneyException("Not enough money");
-        }else{
+        if ((amount +getHold()) > overcoat.getCapacity())
+            throw new CandyCapacityException("Cant hold more Candies. Buy a bigger Coat");
+        else{
             cash -= totalCosts;
             int currentAmountCandy = candies.get(candyType);
             candies.replace(candyType,amount+currentAmountCandy);

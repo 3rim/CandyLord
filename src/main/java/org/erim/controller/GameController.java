@@ -4,6 +4,7 @@ import org.erim.CommandLineGUI;
 import org.erim.entities.Game;
 import org.erim.enums.Candy;
 import org.erim.enums.Location;
+import org.erim.exceptions.CandyCapacityException;
 import org.erim.exceptions.NoMoneyException;
 import org.erim.services.GameService;
 
@@ -42,8 +43,8 @@ public class GameController {
         try {
             Game data = gameService.buyCandy(candy,amount);
             gui.renderMain(data);
-        } catch (NoMoneyException e) {
-            gui.renderErrMsg("You don't have enough Money",gameService.getGameData());
+        } catch (NoMoneyException | CandyCapacityException e) {
+            gui.renderErrMsg(e.getMessage(), gameService.getGameData());
         }
 
     }
