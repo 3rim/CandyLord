@@ -3,6 +3,7 @@ package org.erim.entities;
 import org.erim.enums.Candy;
 import org.erim.enums.Location;
 import org.erim.enums.Overcoat;
+import org.erim.exceptions.NoMoneyException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +22,13 @@ public class Player {
 
     public Player(City city) {
         health = 100;
-        cash = 0;
+        cash = 100;
         overcoat = Overcoat.STANDARD;
         weapons = new ArrayList<>();
         currentLocation = city;
         candies = new HashMap<>();
         for (Candy value : Candy.values()) {
-            candies.put(value,0);
+            candies.put(value, 0);
         }
     }
 
@@ -68,6 +69,20 @@ public class Player {
         return currentLocation;
     }
 
+    public int getCapacity() {
+        return getOvercoat().getCapacity();
+    }
+
+    /**
+     * Current Hold of the player
+     *
+     * @return the current hold
+     */
+    public int getHold() {
+        // Sum all the integer values using Java 8 Streams
+        return candies.values().stream().mapToInt(Integer::intValue).sum();
+    }
+
     public void setCurrentCity(City newLocation) {
         this.currentLocation = newLocation;
     }
@@ -87,6 +102,18 @@ public class Player {
      */
     public int capacity() {
         return overcoat.getCapacity();
+    }
+
+    public void buyCandy(Candy candyType, int amount) {
+        int candyPrice = this.currentLocation.getBlackMarketList().get(candyType);
+        int totalCosts = amount * candyPrice;
+        if (cash < (totalCosts)) {
+            throw new NoMoneyException("Not enough money");
+        }else{
+            cash -= totalCosts;
+            int currentAmountCandy = candies.get(candyType);
+            candies.replace(candyType,amount+currentAmountCandy);
+        }
     }
 
 

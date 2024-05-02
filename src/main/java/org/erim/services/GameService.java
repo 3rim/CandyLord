@@ -20,10 +20,10 @@ public class GameService {
         this.travelCosts = new HashMap<>();
     }
 
-    public Game newGame(){
-        //TODO:
 
-        return null;
+    public Game newGame(){
+        game = new Game();
+        return game;
     }
 
     public Game closeGame(){
@@ -64,5 +64,10 @@ public class GameService {
 
     public Game getGameData() {
         return game;
+    }
+
+    public Game buyCandy(Candy candyType, int amount) {
+       game.getPlayer().buyCandy(candyType,amount);
+       return game;
     }
 }

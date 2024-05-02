@@ -1,15 +1,9 @@
 package org.erim;
 
-import de.vandermeer.asciitable.AT_Row;
-import de.vandermeer.asciitable.AsciiTable;
-import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import org.erim.controller.GameController;
 import org.erim.entities.Game;
-import org.erim.enums.Candy;
 import org.erim.services.GameService;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -30,11 +24,7 @@ public class Main {
 //            System.out.println(choco.getRandomPriceMinMax());
 //        });
 
-        GameService gameService = new GameService();
-        CommandLineGUI gui = new CommandLineGUI();
-        GameController gameController = new GameController(gameService,gui);
-
-       /* LocalDate date = LocalDate.now();
+         /* LocalDate date = LocalDate.now();
 
         String formattedDate = date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
         String location = "Miami";
@@ -47,16 +37,19 @@ public class Main {
         System.out.println("│                                                               │ ");*/
 
 
+        GameService gameService = new GameService();
+        CommandLineGUI gui = new CommandLineGUI();
+        GameController gameController = new GameController(gameService,gui);
+        Game game = gameService.newGame();
+
         Scanner scanner = new Scanner(System.in);
         boolean gameRunning = true;
 
-
-
+        gui.renderMain(game);
         while(gameRunning){
-            printGUI();
             String input = scanner.next();
             switch (input){
-                case "b" -> gameController.buy();
+                case "b" -> gameController.buyOptions();
                 case "s" -> gameController.sell();
                 case "j" -> gameController.jet();
                 case "v" -> gameController.bank();
