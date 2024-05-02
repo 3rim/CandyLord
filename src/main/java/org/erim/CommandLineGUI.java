@@ -92,7 +92,7 @@ public class CommandLineGUI {
         LoanShark loanShark = gameData.getLoanShark();
 
         stringBuilder
-                .append("Hold:").append(player.getHold()).append(" (max ").append(player.getCapacity()).append(")").append(LINE_BREAK)
+                .append("Hold:").append(player.getHold()).append(" (max ").append(player.capacity()).append(")").append(LINE_BREAK)
                 .append("cash:").append(player.getCash()).append(LINE_BREAK)
                 .append("In Bank:").append(bank.getSavings()).append(LINE_BREAK)
                 .append("In Debt:").append(loanShark.getDebt()).append(LINE_BREAK)

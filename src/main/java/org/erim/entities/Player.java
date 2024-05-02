@@ -70,9 +70,6 @@ public class Player {
         return currentLocation;
     }
 
-    public int getCapacity() {
-        return getOvercoat().getCapacity();
-    }
 
     /**
      * Current Hold of the player
