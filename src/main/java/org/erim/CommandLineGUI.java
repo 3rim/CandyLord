@@ -5,6 +5,7 @@ import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import org.erim.entities.*;
 import org.erim.enums.Candy;
+import org.erim.enums.Location;
 
 import java.util.List;
 import java.util.Map;
@@ -26,12 +27,13 @@ public class CommandLineGUI {
         AT_Row header = main.addRow(null, null, "* * * Candy Lord * * *");
         header.setTextAlignment(TextAlignment.CENTER);
         main.addRule();
-        AT_Row stats = main.addRow(null, "", "Location:" + printPlayerLocation(gameData));
+        AT_Row stats = main.addRow(null, "Date:"+gameData.getDate(), "Location:" + printPlayerLocation(gameData));
         stats.setTextAlignment(TextAlignment.CENTER);
         main.addRule();
         AT_Row third = main.addRow("Candy on Hand", "Street Prices", "Player Stats");
         main.addRule();
         AT_Row lists = main.addRow(printPlayerCandy(gameData), printStreetPrices(gameData), printPlayerStats(gameData));
+        main.addRule();
 
         System.out.println(main.render());
     }
@@ -102,5 +104,11 @@ public class CommandLineGUI {
         }
 
         renderMain(gameData);
+    }
+
+    public void renderCityOptions(Map<Location, Integer> travelCosts) {
+        travelCosts.forEach((location , travelCost) ->
+                System.out.printf("%d.%s %d$ || ",location.ordinal(),location,travelCost));
+        System.out.println();
     }
 }

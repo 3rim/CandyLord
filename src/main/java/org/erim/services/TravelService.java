@@ -32,11 +32,17 @@ public class TravelService {
                 result.put(city, LONG_DISTANCE);
             }
         }
-        return result;
+        travelPrices = result;
+        return travelPrices;
     }
 
     public void travel(Player player, Location city, List<City> cities) {
         int cost = travelPrices.get(city);
+
+//        Location currentLocation = player.getCurrentCity().getLocation();
+//        Map<Location, Integer> locationIntegerMap = calcPrices(currentLocation);
+//        int cost = locationIntegerMap.get(currentLocation);
+
         if(player.getCash() < cost){
             throw new NoMoneyException("Player has not enough money");
         } else if (city == player.getCurrentCity().getLocation()) {
@@ -51,9 +57,5 @@ public class TravelService {
 
         int playerCurrentCash = player.getCash();
         player.setCash(playerCurrentCash - cost);
-    }
-
-    public Map<Location, Integer> getPrices() {
-        return travelPrices;
     }
 }

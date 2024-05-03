@@ -22,8 +22,8 @@ public class GameController {
         this.gui = gui;
     }
 
-    public Map<Location, Integer> jet(){
-         return gameService.getTravelCosts();
+    public Map<Location, Integer> jet() {
+        return gameService.getTravelCosts();
     }
 
     public void candyOptions() {
@@ -35,20 +35,21 @@ public class GameController {
 
         buyCandy(candyType,amount);*/
     }
-    public void buyCandy(int candyType,int amount){
+
+    public void buyCandy(int candyType, int amount) {
         Candy candy = Candy.values()[candyType];
         try {
-            Game data = gameService.buyCandy(candy,amount);
+            Game data = gameService.buyCandy(candy, amount);
             gui.renderMain(data);
         } catch (NoMoneyException | CandyCapacityException e) {
             gui.renderErrMsg(e.getMessage(), gameService.getGameData());
         }
     }
 
-    public void sellCandy(int candyType,int amount) {
+    public void sellCandy(int candyType, int amount) {
         Candy candy = Candy.values()[candyType];
         try {
-            Game data = gameService.sellCandy(candy,amount);
+            Game data = gameService.sellCandy(candy, amount);
             gui.renderMain(data);
         } catch (CanNotSellCandyException e) {
             gui.renderErrMsg(e.getMessage(), gameService.getGameData());
@@ -59,5 +60,19 @@ public class GameController {
     }
 
     public void loan() {
+    }
+
+    public void jetOptions() {
+        gui.renderCityOptions(gameService.getTravelCosts());
+    }
+
+    public void travelTo(int destination) {
+        try {
+            Location location = Location.values()[destination];
+            Game data = gameService.travelTo(location);
+            gui.renderMain(data);
+        } catch (NoMoneyException e) {
+            gui.renderErrMsg(e.getMessage(), gameService.getGameData());
+        }
     }
 }

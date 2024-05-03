@@ -1,23 +1,23 @@
 package org.erim.services;
 
+import org.erim.entities.City;
 import org.erim.entities.Game;
 import org.erim.enums.Candy;
 import org.erim.enums.Location;
 
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GameService {
-    private TravelService travelService;
+    private final TravelService travelService;
     private Game game;
-    private Map<Candy,Integer> candyPrices;
-    private Map<Location,Integer> travelCosts;
 
     public GameService(){
         this.travelService = new TravelService();
         this.game = new Game();
-        this.candyPrices = new HashMap<>();
-        this.travelCosts = new HashMap<>();
     }
 
 
@@ -32,8 +32,8 @@ public class GameService {
     }
 
     public Game nextRound(){
-
-        return null;
+        game.nextRound();
+        return game;
     }
 
     /**
@@ -41,10 +41,10 @@ public class GameService {
      * @return the travel costs from current location to others
      */
     public Map<Location, Integer> getTravelCosts() {
-        return travelService.getPrices();
+        return travelService.calcPrices(game.getPlayer().getCurrentCity().getLocation());
     }
 
-    public void travelTo(Location city){
+    public Game travelTo(Location city){
         /*int travelCost = travelCosts.get(city);
         if(game.getPlayer().getCash() < travelCost){
             throw new NoMoneyException("Player has not enough money");
@@ -59,7 +59,9 @@ public class GameService {
         return game;*/
 
         travelService.travel(game.getPlayer(),city,game.getCities());
-
+        // Unnötiges shuffeln aller Städte. Eine Stadt wird dann relevant,wenn sie besucht wird.
+        game.getCities().forEach(City::shuffleMarket);
+        return nextRound();
     }
 
     public Game getGameData() {

@@ -13,16 +13,16 @@ public class Main {
     public static void main(String[] args) {
         GameService gameService = new GameService();
         CommandLineGUI gui = new CommandLineGUI();
-        GameController gameController = new GameController(gameService,gui);
+        GameController gameController = new GameController(gameService, gui);
         Game game = gameService.newGame();
 
         Scanner scanner = new Scanner(System.in);
         boolean gameRunning = true;
 
         gui.renderMain(game);
-        while(gameRunning){
+        while (gameRunning) {
             String input = scanner.next();
-            switch (input.toLowerCase()){
+            switch (input.toLowerCase()) {
                 case "b" -> {
                     System.out.println("What do you wanna BUY?");
                     gameController.candyOptions();
@@ -31,7 +31,7 @@ public class Main {
                     System.out.println("How many?");
                     int amount = scanner.nextInt();
 
-                    gameController.buyCandy(candyType,amount);
+                    gameController.buyCandy(candyType, amount);
                 }
                 case "s" -> {
                     System.out.println("What do you wanna SELl ?");
@@ -41,10 +41,15 @@ public class Main {
                     System.out.println("How many?");
                     int amount = scanner.nextInt();
 
-                    gameController.sellCandy(candyType,amount);
+                    gameController.sellCandy(candyType, amount);
 
                 }
-                case "j" -> gameController.jet();
+                case "j" -> {
+                    System.out.println("Where do you wanna travel?");
+                    gameController.jetOptions();
+                    int destination = scanner.nextInt();
+                    gameController.travelTo(destination);
+                }
                 case "v" -> gameController.bank();
                 case "l" -> gameController.loan();
                 default -> System.out.println("could not read input");
